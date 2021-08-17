@@ -1,0 +1,5 @@
+{
+    "lldb.displayFormat": "decimal",
+    "lldb.showDisassembly": "always",
+    "lldb.dereferencePointers": false
+}
