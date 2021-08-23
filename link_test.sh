@@ -1,4 +1,5 @@
 clear
+rm -rf *.o *.a
 gcc -c mylib1.c -o mylib1.o
 gcc -c mylib2.c -o mylib2.o
 gcc -c mylib3.c -o mylib3.o
