@@ -1,5 +1,6 @@
 #include "mylib1.h"
 #include "mylib2.h"
+#include "mylib3.h"
 #include <stdio.h>
 
 int main() {
@@ -8,4 +9,10 @@ int main() {
 
   double b = mylib2(6.3);
   printf("%lf\n", b);
+
+  double c = mylib3(6.3);
+  printf("%lf\n", c);
+
+  double p = mylib_public(6.3);
+  printf("%lf\n", p);
 }
