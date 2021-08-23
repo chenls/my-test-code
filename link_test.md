@@ -1,5 +1,5 @@
 # 总结
 
 1. 不同库中有重复的定义，链接时不会同时加载就可以编译通过。如：lib1.a(a.c b.c)、lib2.a(b.c)
-2. 不同库中有重复的定义，但是未使用此函数就可以编译通过。如：lib1.a(a.c b.c[public])、lib2.a(c.c[public])
+2. 不同库中有重复的定义，未使用此函数，但是被load后，也不能编译通过。如：lib1.a(a.c b.c[public])、lib2.a(c.c[public])
 3. 
