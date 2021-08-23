@@ -10,8 +10,8 @@ int main() {
   double b = mylib2(6.3);
   printf("%lf\n", b);
 
-  double c = mylib3(6.3);
-  printf("%lf\n", c);
+  // double c = mylib3(6.3);
+  // printf("%lf\n", c);
 
   // double p = mylib_public(6.3);
   // printf("%lf\n", p);
