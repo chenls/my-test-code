@@ -1,0 +1,1 @@
+double mylib2(double __x);
