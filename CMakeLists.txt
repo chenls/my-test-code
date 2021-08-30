@@ -13,8 +13,8 @@ project(test)
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -v")
 # set(CMAKE_CXX_FLAGS "-g -static ${CMAKE_CXX_FLAGS}")
 
-aux_source_directory(. DIR_SRCS)
+# aux_source_directory(main2.c DIR_SRCS)
 
-set(CMAKE_EXE_LINKER_FLAGS "-Wl,--dynamic-linker=linker64 -Wl,-rpath=./")
+# set(CMAKE_EXE_LINKER_FLAGS "-Wl,--dynamic-linker=linker64 -Wl,-rpath=./")
 
-add_executable(test ${DIR_SRCS} )
+add_executable(test main2.c )
