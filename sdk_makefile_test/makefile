@@ -43,7 +43,7 @@ else ifeq ($(ARCH),android-aarch64)
     IS_AARCH64 := 1
 else ifeq ($(ARCH),qsee-aarch64)
     MACHINE := aarch64-linux-gnu
-    COMMONFLAGS := -fPIC -fpie -march=armv8.2-a+fp16+dotprod -DMEGDNN_DISABLE_FLOAT16 -D__ARM_FEATURE_FP16_VECTOR_ARITHMETIC=0
+    COMMONFLAGS := -fPIC -fpie -march=armv8.2-a+fp16+dotprod -DMEGDNN_DISABLE_FLOAT16
     OPTFLAGS := -relocation-model=pic
     IS_AARCH64 := 1
 else
@@ -56,11 +56,9 @@ else
 endif
 
 COMMONFLAGS := -emit-llvm $(OPTLEVEL)  -target $(MACHINE) \
-	-nostdlib -nodefaultlibs -fno-builtin  -ffreestanding \
-	-fvisibility=hidden -fno-stack-protector -nostdinc \
-	-fvisibility-inlines-hidden -fno-asynchronous-unwind-tables \
-	-fno-unwind-tables -fomit-frame-pointer \
-	-DNDEBUG -Wall -Wextra -Wwrite-strings -Wno-unused-parameter  \
+	-fvisibility=hidden \
+	-fvisibility-inlines-hidden -fomit-frame-pointer \
+	-DNDEBUG -Wall -Wextra -Wwrite-strings   \
 	-D_XOPEN_SOURCE=700 $(COMMONFLAGS) -Isrc/sys/include -Isrc -IFingerprintUnlock/tee_sdk/vendor/$(VENDOR_NAME)/include/
 ifeq ($(LIMIT_TIME),1)
 	COMMONFLAGS := $(COMMONFLAGS) -D__SDK_DEMO_RELEASE__
@@ -99,17 +97,16 @@ endif
 CFLAGS_MUSL := $(CFLAGS_MUSL) -I$(MUSL)/arch/generic \
 	-I$(MUSL_INSTALL)/include $(MEGDEBASE_FLAGS)
 
+# CFLAGS_MUSL += -v
+
 CFLAGS_MEGDNN := $(COMMONFLAGS) $(MEGDNN_FLAGS)
 CFLAGS_MEGDNN := $(filter-out -emit-llvm,$(CFLAGS_MEGDNN))
 
-CXXFLAGS := $(COMMONFLAGS) -fno-exceptions -fno-rtti -std=c++14  -nostdinc++ \
-	-Wno-user-defined-literals \
-	-D_LIBCPP_BUILDING_LIBRARY -D_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER \
-	-D_LIBCPP_NO_EXCEPTIONS -D_LIBCPP_NO_RTTI -D_LIBCPP_HAS_NO_THREADS \
-	-D_LIBCXXABI_BUILDING_LIBRARY -D_LIBCXXABI_HAS_NO_PRAGMA_SYSTEM_HEADER \
-	-D_LIBCXXABI_NO_EXCEPTIONS -D_LIBCXXABI_NO_RTTI -D_LIBCXXABI_HAS_NO_THREADS \
+CXXFLAGS := $(COMMONFLAGS) -std=c++14  \
 	-I$(LIBCXX)/include -I$(LIBCXXABI)/include \
 	-isystem $(MUSL_INSTALL)/include $(DEP_LIB_FLAGS)
+
+# CXXFLAGS += -v
 
 CXX := clang++$(SUFFIX)
 CC := clang$(SUFFIX)
@@ -119,7 +116,7 @@ LLD := ld.lld$(SUFFIX)
 LLVM_LINK := llvm-link$(SUFFIX)
 LLVM_NM := llvm-nm$(SUFFIX)
 
-CXXSOURCES += $(shell find -L . -name '*.cpp' | sort)
+CXXSOURCES += $(shell find -L . -name '*.cpp' ! -path './elfmanip/*' | sort)
 CSOURCES := $(shell find -L . -name '*.c' ! -path 'src/sys/musl_aarch64/*' ! -path 'src/sys/musl_armv7/*' ! -path 'src/sys/compiler-rt-builtins-aarch64/*' ! -path 'src/sys/optee_os_arm/*' ! -path "src/libjpeg/*" | sort)
 
 ASMSOURCES := $(shell find -L . -name '*.S')
