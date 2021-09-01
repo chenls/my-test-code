@@ -9,4 +9,9 @@ make OPTLEVEL=-O3 ARCH=qsee-$ARCH_SUFFIX -C ./ NEED_MANGLE=1 VENDOR_NAME=${vendo
 # make -n
 # make -d -p
 make OPTLEVEL=-O3 ARCH=qsee-$ARCH_SUFFIX -C ./ NEED_MANGLE=1 VENDOR_NAME=${vendor_name} PROJECT_NAME=${PROJECT_NAME} LIMIT_TIME=${LimitTime}
-cd -
+
+clang --target=aarch64-none-linux-android28 main.c anctee__aarch64.o -o test
+adb push test /data/local/tmp
+echo
+adb shell /data/local/tmp/test
+cd - &> /dev/null

@@ -15,6 +15,7 @@ all: $(TARGET)
 
 SUFFIX := 
 
+VENDOR_API := mylib1,mylib2
 PUBLIC_API := $(VENDOR_API)
 
 
@@ -119,7 +120,7 @@ LLVM_LINK := llvm-link$(SUFFIX)
 LLVM_NM := llvm-nm$(SUFFIX)
 
 CXXSOURCES += $(shell find -L . -name '*.cpp' ! -path './elfmanip/*' | sort)
-CSOURCES := $(shell find -L . -name '*.c' ! -path 'src/sys/musl_aarch64/*' ! -path 'src/sys/musl_armv7/*' ! -path 'src/sys/compiler-rt-builtins-aarch64/*' ! -path 'src/sys/optee_os_arm/*' ! -path "src/libjpeg/*" | sort)
+CSOURCES := $(shell find -L . -name '*.c' ! -path './main.c' ! -path 'src/sys/musl_aarch64/*' ! -path 'src/sys/musl_armv7/*' ! -path 'src/sys/compiler-rt-builtins-aarch64/*' ! -path 'src/sys/optee_os_arm/*' ! -path "src/libjpeg/*" | sort)
 
 ASMSOURCES := $(shell find -L . -name '*.S')
 
