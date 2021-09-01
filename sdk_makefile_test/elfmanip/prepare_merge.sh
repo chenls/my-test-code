@@ -8,5 +8,5 @@ fi
 
 fpath=$(readlink -f $fpath)
 cd $(dirname $0)
-#make -s
+make -s
 exec ./prepare_merge $fpath

@@ -13,7 +13,7 @@ $(warning "arch=$(ARCH) suffix=$(ARCH_SUFFIX)")
 TARGET := anctee_${VENDOR_NAME}_${ARCH_SUFFIX}.o
 all: $(TARGET)
 
-SUFFIX := -9.0
+SUFFIX := 
 
 PUBLIC_API := $(VENDOR_API)
 
@@ -55,7 +55,8 @@ else
     PUBLIC_API_INTERNAL := $(PUBLIC_API),__aeabi_memclr4,__aeabi_memclr8,__aeabi_memcpy,__aeabi_memcpy4,__aeabi_memcpy8,memset,__aeabi_idiv,__aeabi_idivmod,__aeabi_uidiv,__aeabi_uidivmod,__aeabi_uldivmod
 endif
 
-COMMONFLAGS := -emit-llvm $(OPTLEVEL)  -target $(MACHINE) \
+COMMONFLAGS := -emit-llvm $(OPTLEVEL)  \
+    --target=aarch64-none-linux-android28 \
 	-fvisibility=hidden \
 	-fvisibility-inlines-hidden -fomit-frame-pointer \
 	-DNDEBUG -Wall -Wextra -Wwrite-strings   \
