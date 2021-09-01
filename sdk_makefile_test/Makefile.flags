@@ -1,0 +1,91 @@
+override DBGINFO ?= 0
+ifeq (, $(findstring aarch64, $(ARCH)))
+    ARCH_SUFFIX=armv7
+else
+    ARCH_SUFFIX=aarch64
+endif
+$(warning "arch=$(ARCH) suffix=$(ARCH_SUFFIX)")
+
+ifneq ($(DBGINFO), 0)
+    MGB_FLAGS := -DMGB_ASSERT_LOC=1 -DMGB_ENABLE_LOGGING=1 \
+		-DMGB_VERBOSE_TYPEINFO_NAME=1
+    MEGFACE_FLAGS := -DMGF_ENABLE_LOGGING=1 -DMGF_ENABLE_ASSERT=1
+    override BUILD_DIR := $(BUILD_DIR)-dbginfo
+    $(warning "debug info enabled")
+else
+    MEGDNN_FLAGS := -DMEGDNN_ENABLE_MANGLING=1
+endif
+MGB_FLAGS := $(MGB_FLAGS) -DMGB_HAVE_THREAD=0 -DANDROID=1 -D__ANDROID__=1 \
+	-DMGB_EXTERN_API_TIME=1 -DMGB_EXTERN_API_MEMSTAT=1 \
+        -DMGB_ENABLE_ANDROID_NN=0 -DMGB_ENABLE_CPUINFO=0\
+	-IMegBrain/sdk/build_config \
+	-IMegBrain/src/core/include -IMegBrain/src/opr/include \
+	-IMegBrain/src/gopt/include  \
+	-IMegBrain/src/plugin/include -IMegBrain/src/serialization/include \
+
+MEGDNN_FLAGS := $(MEGDNN_FLAGS) \
+	-DMEGDNN_ANDROID=1 -DMEGDNN_NO_THREAD=1 \
+	-DMEGDNN_DISABLE_FLOAT16=1 \
+	-funsafe-math-optimizations -I MegBrain/dnn/include -I MegBrain/dnn/ \
+	-I MegBrain/third_party/midout/src
+ifneq ($(IS_AARCH64),1)
+	MEGDNN_FLAGS += -DMGF_PLATFORM_ARM32=1 -D__ARM_32__
+else
+	MEGDNN_FLAGS += -DMGF_PLATFORM_ARM32=0
+endif
+ifneq ($(IS_AARCH64),1)
+	MEGDNN_FLAGS += -include src/megdnn/megdnn_archdef_armv7.h
+else
+	MEGDNN_FLAGS += -include src/megdnn/megdnn_archdef_aarch64.h
+endif
+
+ifeq ($(VENDOR_NAME),megvii)
+	MEGDNN_FLAGS := $(MEGDNN_FLAGS)
+else
+    BIN_REDUCE_FILE=FingerprintUnlock/models/cache/$(ARCH_SUFFIX)/bin_reduce.h
+    ifeq ($(BIN_REDUCE_FILE), $(wildcard $(BIN_REDUCE_FILE)))
+        MEGDNN_FLAGS := $(MEGDNN_FLAGS) -include $(BIN_REDUCE_FILE)
+    endif
+endif
+
+MEGFACE_FLAGS := $(MEGFACE_FLAGS) -DMGF_NO_TIME_API=1 \
+	-D__MGF_TEE__ \
+	-DMGF_FEAT_KEY_FOR_VIVO=1 \
+	-DMGF_PLATFORM_ANDROID=1 \
+	-Imegface-v2/include -IMegCV2/include -Isrc/megface-bucket -Imegface-v2/include/nlohmann/single_include \
+	-D__ARM_NEON__
+	#-DMGF_ENABLE_TRACE=1 -DTRACE_INTERNAL=1 \
+
+ifeq ($(ARCH_SUFFIX),armv7)
+	MEGFACE_FLAGS := $(MEGFACE_FLAGS) -D__ARM_32__
+endif
+
+MEGDEBASE_FLAGS := $(MEGDEBASE_FLAGS)  -Ilibdebase/include -Ilibdebase/src -Ilibdebase/src/include
+
+SDK_VERSION = "$(shell TZ=CST date -u "+%Y%m%d%H")"
+MEGTEE_VERSION = "$(shell git rev-parse --short HEAD)"
+ifdef BUILD_NUMBER
+	BuildNumber = $(BUILD_NUMBER)
+else
+	BuildNumber = 0
+endif
+# FINGERPRINT_UNLOCK_FLAGS can be changed from commandline
+override FINGERPRINT_UNLOCK_FLAGS := $(FINGERPRINT_UNLOCK_FLAGS) \
+    	-IFingerprintUnlock/models\
+	-Isrc/fingerprint-unlock/vendor/$(VENDOR_NAME)/include \
+	-Isrc/fingerprint-unlock/vendor/vendor/include \
+	-Isrc/fingerprint-unlock/src/include \
+	-Isrc/fingerprint-unlock/src/include/mgulk \
+	-Isrc/libjpeg \
+	-DMGULK_USE_MGB_TIMER=1 -DMGULK_IN_TEE=1 \
+	-DMGULK_USE_DEPTH=1 -DMGULK_USE_PATTERN=1 \
+	-DMEM_PROFILE=1 \
+	-DPROJECT_NAME=\"$(PROJECT_NAME)\" -DSDK_VERSION=\"$(SDK_VERSION)\" -DMEGTEE_VERSION=\"$(MEGTEE_VERSION)\" \
+	-DBUILD_NUMBER=$(BuildNumber) -DBUILD_NUMBER_STR=\"$(BuildNumber)\" -DFAST_COMPARE_RET
+
+DEP_LIB_FLAGS := -DMEGTEE_INTERNAL_BUILD=1 \
+	$(MGB_FLAGS) $(MEGDNN_FLAGS) $(MEGFACE_FLAGS) $(FINGERPRINT_UNLOCK_FLAGS)   $(MEGDEBASE_FLAGS)
+
+echo_flags:
+	@echo $(DEP_LIB_FLAGS)
+.PHONY: echo_flags
