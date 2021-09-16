@@ -36,7 +36,7 @@ endif
 ifneq ($(IS_AARCH64),1)
 	MEGDNN_FLAGS += -include src/megdnn/megdnn_archdef_armv7.h
 else
-	MEGDNN_FLAGS += -include src/megdnn/megdnn_archdef_aarch64.h
+	# MEGDNN_FLAGS += -include src/megdnn/megdnn_archdef_aarch64.h
 endif
 
 ifeq ($(VENDOR_NAME),megvii)

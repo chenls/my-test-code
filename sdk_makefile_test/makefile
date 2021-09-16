@@ -15,7 +15,7 @@ all: $(TARGET)
 
 SUFFIX := 
 
-VENDOR_API := mylib1,mylib2
+VENDOR_API := test
 PUBLIC_API := $(VENDOR_API)
 
 

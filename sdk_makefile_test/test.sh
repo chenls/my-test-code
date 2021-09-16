@@ -14,14 +14,4 @@ ls -al anctee__aarch64.o test
 adb push test /data/local/tmp
 echo
 adb shell /data/local/tmp/test
-
-clang --target=aarch64-none-linux-android28 -ffunction-sections -fdata-sections -c mylib1.c -o mylib1.o
-clang --target=aarch64-none-linux-android28 -ffunction-sections -fdata-sections -c mylib2.c -o mylib2.o
-aarch64-linux-gnu-ld -r mylib1.o mylib2.o -o mylib.o
-clang --target=aarch64-none-linux-android28 main.c mylib.o -o test2 -Wl,-gc-sections
-ls -al mylib.o test2
-adb push test2 /data/local/tmp
-echo
-adb shell /data/local/tmp/test2
-
-cd - &> /dev/null
+cd -

@@ -1,11 +1,7 @@
-#include "mylib1.h"
-#include "mylib2.h"
+#include "MyIn.h"
 #include <stdio.h>
 
 int main() {
-  double a = mylib1(6.3);
-  printf("%lf\n", a);
-
-  double b = mylib2(6.3);
-  printf("%lf\n", b);
+  double a = test(6.3);
+  printf("%s: %lf\n", __func__, a);
 }
