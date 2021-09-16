@@ -1,3 +1,5 @@
+# 说明
+# https://www.diigo.com/user/chenls/b/605517016
 
 clear
 dir=$(dirname $(readlink -f "$0"))
@@ -14,4 +16,4 @@ ls -al anctee__aarch64.o test
 adb push test /data/local/tmp
 echo
 adb shell /data/local/tmp/test
-cd -
+cd - >/dev/null
