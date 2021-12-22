@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# ~/.cache/bazel/_bazel_chenliusheng/install/5311a955d8f6659e082ae84c7ade6dfe
+# touch -t 203112121315.50 linux-sandbox*
+
+work_path=/home/chenliusheng/Desktop/my-test-code/bazel_stage3
+index=0
+for arg in "$@"; do
+    args[$index]=$arg
+    let index+=1
+done
+index=0
+for arg in "$@"; do
+    case "${arg}" in
+    -o | -MF)
+        touch $work_path/${args[($index + 1)]}
+        ;;
+    esac
+    let index+=1
+done

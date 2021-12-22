@@ -2,6 +2,9 @@
     // 使用 IntelliSense 了解相关属性。 
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    // 
+    // 代码入口
+    // FingerPrintPipeline/sdk/megfinger/tee_sdk_demo/jiiov/src/main.cpp
     "version": "0.2.0",
     "configurations": [
         {
@@ -14,6 +17,34 @@
             "request": "launch",
             "name": "Launch a bazel starlark debug session",
             "targetLabel": "//main:hello-world"
+        },
+        {
+            "preLaunchTask": "build task",
+            "name": "GDB",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bazel-bin/main/hello-world",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "preLaunchTask": "build task",
+            "type": "cppdbg",
+            "request": "launch",
+            "name": "LLDB",
+            "program": "${workspaceFolder}/bazel-bin/main/hello-world",
+            "args": [],
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

@@ -1,1 +1,3 @@
-build.log
+/*.log
+/bazel-*
+/compile_commands.json
