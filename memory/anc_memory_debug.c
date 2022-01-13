@@ -276,7 +276,9 @@ void AncUnRegisterAllocation(void *p_addr) {
 
     // free memory record when total memory size is 0
     if (gp_anc_mem_debug->mem_total_size == 0) {
-        AncPlatformFree(gp_anc_mem_debug->p_mem_record);
+        if(gp_anc_mem_debug->p_mem_record != NULL) {
+            AncPlatformFree(gp_anc_mem_debug->p_mem_record);
+        }
         gp_anc_mem_debug->p_mem_record = NULL;
     }
 }
@@ -349,10 +351,12 @@ static void AncMemoryMapDestory() {
 }
 
 static void AncMemoryRecordDestory() {
-    if ((NULL == gp_anc_mem_debug) || (NULL == gp_anc_mem_debug->p_mem_record)) {
-        ANC_LOGE("anc memory record destory, invalid param, memory debug:%p, memory record:%p",
-                 gp_anc_mem_debug,
-                 gp_anc_mem_debug->p_mem_record);
+    if (NULL == gp_anc_mem_debug) {
+        ANC_LOGE("anc memory record destory, invalid param gp_anc_mem_debug");
+        return;
+    }
+    if (NULL == gp_anc_mem_debug->p_mem_record) {
+        ANC_LOGD("anc memory record destory, p_mem_record has been released");
         return;
     }
     AncMemListRecord *p_record_node = gp_anc_mem_debug->p_mem_record;
