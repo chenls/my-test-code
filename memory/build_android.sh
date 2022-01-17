@@ -1,4 +1,4 @@
-# set -e
+set -e
 clear
 dir=$(dirname $(readlink -f "$0"))
 cd $dir
@@ -7,6 +7,7 @@ rm -rf build/*
 cd build
 cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
 -DANDROID_PLATFORM=android-28 \
+-DANDROID_ABI="arm64-v8a" \
 ..
 
 bear make VERBOSE=1
