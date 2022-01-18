@@ -28,6 +28,7 @@ static ANC_RETURN_TYPE VcResetImagePath(const char *p_dir) {
 }
 
 int main() {
+
   ANC_LOGD("VcResetImagePath");
   VcResetImagePath("/data/vendor/fingerprint/vc_image_raw/001/");
 
@@ -48,7 +49,7 @@ int main() {
   void *c = AncMalloc(200);
   AncFree(c);
 
-  int ret = AncMemoryWrapperCheck();
+  int ret = (int)AncMemoryWrapperCheck();
   ANC_LOGD("ret = %d", ret);
   AncMemoryWrapperReleaseChecker();
   return ret;

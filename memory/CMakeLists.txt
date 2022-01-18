@@ -26,6 +26,9 @@ set(CMAKE_C_FLAGS "-O0 -g -DANC_DEBUG -v")
 # Add optimization level [-OX] to get reasonable performance (see recommendations in the particular Sanitizer documentation).
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+set_target_properties(${TARGET} PROPERTIES LINK_FLAGS -fsanitize=address)
+
 
 if(CMAKE_TOOLCHAIN_FILE)
     # link_libraries("/home/chenliusheng/soft/android-ndk-r20/platforms/android-28/arch-arm/usr/lib/liblog.so")

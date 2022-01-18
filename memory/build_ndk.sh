@@ -22,6 +22,6 @@ file libs/arm64-v8a/test
 echo ""
 adb push libs/arm64-v8a/test /data/local/tmp/test_666
 adb push libs/arm64-v8a/libclang_rt.asan-aarch64-android.so /data/local/tmp/
-adb push libs/arm64-v8a/wrap.sh /data/local/tmp/
+adb push wrap.sh /data/local/tmp/
 adb shell "cd /data/local/tmp/; ./wrap.sh ./test_666"
 echo ret:$?

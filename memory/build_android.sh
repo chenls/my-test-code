@@ -16,5 +16,8 @@ ln -sf build/compile_commands.json compile_commands.json
 file ./build/test
 echo ""
 adb push ./build/test /data/local/tmp/test_666
-adb shell /data/local/tmp/test_666
+# adb shell /data/local/tmp/test_666
+adb push libs/arm64-v8a/libclang_rt.asan-aarch64-android.so /data/local/tmp/
+adb push wrap.sh /data/local/tmp/
+adb shell "cd /data/local/tmp/; ./wrap.sh ./test_666"
 echo ret:$?
