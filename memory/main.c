@@ -3,13 +3,40 @@
 
 #define LOG_TAG "[ANC_MAIN]"
 
+#include <dirent.h>
+#include <stdlib.h>
+
+static ANC_RETURN_TYPE VcResetImagePath(const char *p_dir) {
+  struct dirent **p_entry_list = NULL;
+  ANC_LOGD("read %s", p_dir);
+  int count = scandir(p_dir, &p_entry_list, NULL, alphasort);
+  if (count < 0) {
+    ANC_LOGE("read %s failed, no files!", p_dir);
+    return ANC_FAIL;
+  }
+
+  for (int i = 0; i < count; i++) {
+    struct dirent *p_entry = p_entry_list[i];
+    if (!(strcmp(p_entry->d_name, ".") == 0) &&
+        !(strcmp(p_entry->d_name, "..") == 0)) {
+      ANC_LOGD("vc image:%s", p_entry->d_name);
+    }
+    free(p_entry);
+  }
+  free(p_entry_list);
+  return ANC_OK;
+}
+
 int main() {
+  ANC_LOGD("VcResetImagePath");
+  VcResetImagePath("/data/vendor/fingerprint/vc_image_raw/001/");
+
   void *a = AncMalloc(100);
   AncFree(a);
 
-  char p[5] = {0};
-  int index = 5;
-  p[index] = 5;
+  // char p[5] = {0};
+  // int index = 5;
+  // p[index] = 5;
 
   // AncMemoryWrapperCheck();
   // AncMemoryWrapperReleaseChecker();

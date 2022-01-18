@@ -13,7 +13,7 @@ project(test)
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -v")
 # set(CMAKE_CXX_FLAGS "-g -static ${CMAKE_CXX_FLAGS}")
 
-set(CMAKE_C_FLAGS "-O0 -g -DANC_DEBUG")
+set(CMAKE_C_FLAGS "-O0 -g -DANC_DEBUG -v")
 
 # For [sanitizer_name] use one of the following:
 # address for AddressSanitizer
@@ -28,6 +28,7 @@ set(CMAKE_C_FLAGS "-O0 -g -DANC_DEBUG")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
 
 if(CMAKE_TOOLCHAIN_FILE)
+    # link_libraries("/home/chenliusheng/soft/android-ndk-r20/platforms/android-28/arch-arm/usr/lib/liblog.so")
     link_libraries("/home/chenliusheng/soft/android-ndk-r20/platforms/android-28/arch-arm64/usr/lib/liblog.so")
 endif()
 
