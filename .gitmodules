@@ -1,3 +1,6 @@
 [submodule "bazel_stage3/Bazel_and_CompileCommands"]
 	path = bazel_stage3/Bazel_and_CompileCommands
 	url = git@git.jiiov.com:liusheng.chen/Bazel_and_CompileCommands.git
+[submodule "awesome-cheatsheets"]
+	path = awesome-cheatsheets
+	url = https://github.com/skywind3000/awesome-cheatsheets.git
