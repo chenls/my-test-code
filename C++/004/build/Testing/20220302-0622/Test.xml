@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Linux-clang++-10"
+	BuildStamp="20220302-0622-Experimental"
+	Name="BJ-DZ0104002"
+	Generator="ctest-3.16.3"
+	CompilerName="/bin/clang++-10"
+	CompilerVersion="10.0.0"
+	OSName="Linux"
+	Hostname="BJ-DZ0104002"
+	OSRelease="5.13.0-30-generic"
+	OSVersion="#33~20.04.1-Ubuntu SMP Mon Feb 7 14:25:10 UTC 2022"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="142"
+	ProcessorCacheSize="6144"
+	NumberOfLogicalCPU="8"
+	NumberOfPhysicalCPU="4"
+	TotalVirtualMemory="2047"
+	TotalPhysicalMemory="15781"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="1841.58"
+	>
+	<Testing>
+		<StartDateTime>Mar 02 14:28 CST</StartDateTime>
+		<StartTestTime>1646202510</StartTestTime>
+		<TestList/>
+		<EndDateTime>Mar 02 14:28 CST</EndDateTime>
+		<EndTestTime>1646202510</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

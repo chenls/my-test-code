@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/chenliusheng/Desktop/my-test-code/C++/004/build",
+  "command": "/usr/bin/c++    -O3 -DNDEBUG   -pthread -o CMakeFiles/main.dir/main.cpp.o -c /home/chenliusheng/Desktop/my-test-code/C++/004/main.cpp",
+  "file": "/home/chenliusheng/Desktop/my-test-code/C++/004/main.cpp"
+}
+]
